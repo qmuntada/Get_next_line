@@ -20,14 +20,17 @@ int		check_buf(char *buf, int pivot, char **line)
 	start = pivot;
 	str = NULL;
 	while (pivot < BUFF_SIZE)
-		if (buf[++pivot] == '\n')
+	{
+		if (buf[pivot] == '\n')
 		{
 			str = ft_memalloc(ft_strlen(*line) + ft_strlen(buf + start));
 			str = ft_strcpy(str, *line);
 			str = ft_strncat(str, buf + start, pivot - start);
 			*line = str;
-			return (pivot);
+			return (++pivot);
 		}
+		pivot++;
+	}
 	str = ft_memalloc(ft_strlen(*line) + ft_strlen(buf + start));
 	str = ft_strcpy(str, *line);
 	str = ft_strncat(str, buf + start, pivot - start);

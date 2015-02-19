@@ -17,25 +17,20 @@ int		check_buf(char *buf, int pivot, char **line)
 	int				start;
 	char			*str;
 
-	start = pivot;
-	str = NULL;
-	while (pivot < BUFF_SIZE)
-	{
+	start = (pivot -= 1) + 1;
+	while (++pivot < BUFF_SIZE)
 		if (buf[pivot] == '\n')
 		{
-			str = ft_memalloc(ft_strlen(*line) + ft_strlen(buf + start));
+			str = ft_memalloc(ft_strlen(*line) + ft_strlen(buf));
 			str = ft_strcpy(str, *line);
-			str = ft_strncat(str, buf + start, pivot - start);
+			str = ft_strncat(str, buf, ++pivot);
 			*line = str;
-			return (++pivot);
+			return (pivot);
 		}
-		pivot++;
-	}
 	str = ft_memalloc(ft_strlen(*line) + ft_strlen(buf + start));
 	str = ft_strcpy(str, *line);
 	str = ft_strncat(str, buf + start, pivot - start);
 	*line = str;
-	ft_strclr(buf);
 	return (-1);
 }
 
@@ -45,9 +40,9 @@ int		get_next_line(int fd, char **line)
 	static int		pivot = 0;
 	int				status;
 
-	if (fd < 0 || line == NULL)
+	if (fd < 0 || !line || BUFF_SIZE > 100000)
 		return (-1);
-	*line = ft_strnew(0);
+	*line = ft_strnew(1);
 	pivot = check_buf(buf, pivot, line);
 	if (pivot >= 0)
 		return (1);

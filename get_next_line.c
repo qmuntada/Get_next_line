@@ -6,30 +6,30 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/13 16:04:03 by qmuntada          #+#    #+#             */
-/*   Updated: 2015/02/05 16:54:10 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/04 19:49:43 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+#include <stdio.h>
+
 int		line_verif(char **line, char **tmp, int res, char **str)
 {
+	*str = NULL;
 	if (res == 0 && ft_strlen(*tmp) > 0)
 	{
 		*line = *tmp;
-		*str = NULL;
 		*tmp = NULL;
 		return (1);
 	}
-	if (res == 0 && ft_strlen(*tmp) == 0)
-		return (0);
 	return (res);
 }
 
 char	*read_line(char *tmp)
 {
-	size_t			t;
-	char			*line;
+	int		t;
+	char	*line;
 
 	t = 0;
 	while (tmp[t] != '\n')
@@ -42,31 +42,28 @@ char	*read_line(char *tmp)
 
 char	*cpycat(char *s1, char *s2)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = NULL;
-	if ((s1 && !s2) || (!s1 && s2))
-		return (s1 ? s1 : s2);
-	if (!s1 && !s2)
-		return (NULL);
 	tmp = ft_memalloc(ft_strlen(s1) + ft_strlen(s2));
-	tmp = ft_strcpy(tmp, s1);
-	tmp = ft_strncat(tmp, s2, ft_strlen(s2));
+	s1 ? tmp = ft_strcpy(tmp, s1) : NULL;
+	s1 ? tmp = ft_strncat(tmp, s2, ft_strlen(s2)) : NULL;
+	//printf("%s\n", tmp);
 	return (tmp);
 }
 
-int					get_next_line(int const fd, char **line)
+int		get_next_line(int const fd, char **line)
 {
-	static char				*str;
-	int						res;
-	char					*buf;
-	char					*tmp;
+	static char		*str = NULL;
+	int				res;
+	char			*buf;
+	char			*tmp;
 
 	if (fd < 0 || !line || BUFF_SIZE < 1 || BUFF_SIZE > 10000000)
 		return (-1);
-	buf = (char*)malloc(sizeof(char) * (BUFF_SIZE + 1));
+	buf = ft_strnew(BUFF_SIZE + 1);
 	if (str == NULL)
-		str = ft_strnew(BUFF_SIZE);
+		str = ft_memalloc(BUFF_SIZE);
 	tmp = ft_strncpy(ft_memalloc(BUFF_SIZE), str, BUFF_SIZE);
 	while (!(ft_strchr(tmp, '\n')))
 	{

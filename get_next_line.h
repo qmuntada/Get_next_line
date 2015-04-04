@@ -6,7 +6,7 @@
 /*   By: qmuntada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/10 12:32:30 by qmuntada          #+#    #+#             */
-/*   Updated: 2014/11/13 15:54:40 by qmuntada         ###   ########.fr       */
+/*   Updated: 2015/04/04 18:58:03 by qmuntada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 
-# define BUFF_SIZE 256
+# define BUFF_SIZE 7
 
 int		get_next_line(int const fd, char **line);
 
